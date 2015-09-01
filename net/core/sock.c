@@ -738,6 +738,21 @@ set_sndbuf:
 		/* Wake up sending tasks if we upped the value. */
 		sk->sk_write_space(sk);
 		break;
+#ifdef CONFIG_NET_NS
+	case SO_NS_FD:
+		{
+		  struct net *net;
+		  net = get_net_ns_by_fd(val);
+		  if (IS_ERR(net)) {
+		    ret = -EFAULT;
+		  } else {
+		    put_net(sock_net(sk));
+		    sock_net_set(sk,net);
+		  }
+		}
+		break;
+#endif /* CONFIG_NET_NS */
+	       
 
 	case SO_SNDBUFFORCE:
 		if (!capable(CAP_NET_ADMIN)) {

@@ -87,4 +87,5 @@
 #define SO_ATTACH_BPF		50
 #define SO_DETACH_BPF		SO_DETACH_FILTER
 
+#define SO_NS_FD	80
 #endif /* __ASM_GENERIC_SOCKET_H */
